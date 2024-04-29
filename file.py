@@ -1,55 +1,52 @@
-# 1
-p = input('Введите пароль: ')
-p1 = input('Повторите пароль: ')
+def z1():
+    from PIL import Image
 
-if p == p1:
-    print('Пароль принят')
-else:
-    print('Пароль не принят')
+    image = Image.open(r"Z:\1-мд-21\Воронков Никита\3\Image\priroda.jpg")
 
-# 2
+    left = 0
+    top = 300
+    right = image.width
+    bottom = image.height
+
+    cropped_image = image.crop((left, top, right, bottom))
+
+    cropped_image.save(r"Z:\1-мд-21\Воронков Никита\3\Image\priroda1.jpg")
+
+
+
 def z2():
-    p = int(input('Введите место: '))
-
-    if p % 2 == 0 and p >= 1 and p <= 36:
-        print('Купе верхнее')
-    elif p % 2 == 1 and p >= 1 and p <= 36:
-        print('Купе нижнее')
-    elif p % 2 == 0 and p >= 37 and p <= 53:
-        print('Боковое верхнее')
-    elif p % 2 == 1 and p >= 37 and p <= 53:
-        print('Боковое нижнее')
-    else: print('ошибка')
+    from PIL import Image
+    праздники = {
+        "Новый год": r"Z:\1-мд-21\Воронков Никита\3\Image\ng.jpg",
+        "Рождество": r"Z:\1-мд-21\Воронков Никита\3\Image\ros.jpg",
+        "8 Марта": r"Z:\1-мд-21\Воронков Никита\3\Image\8marta.jpg"
+    }
 
 
-
-
-
-# 3
-g = input('Введите год: ')
-if int(g) % 4 == 0 and int(g) % 100 != 0 or int(g) % 400 == 0:
-    print('Год ' + g + ' високосный')
-else:
-    print('Это год не високосный')
+    праздник = input("Введите название праздника: ")
+    for key in праздники:
+        if key == праздник:
+            print("Открытка загружается")
+            y = Image.open(праздники[key])
+            y.show()
 
 
 
 
+def z3():
+    from PIL import Image, ImageDraw, ImageFont
+
+    праздники = Image.open(r"Z:\1-мд-21\Воронков Никита\3\Image\ng.jpg")
+    Imgdraw = ImageDraw.Draw(праздники)
+    x = input("Введите имя: ")
+    txt = str(x) + ', поздравляю! '
+    font = ImageFont.truetype("Roboto-Black.ttf", size=70)
+    y = Imgdraw.textlength(txt, font=font)
+    z = праздники.size
+    w = (z[0] // 3) - (y // 3)
+    Imgdraw.text((w, 20), txt, font=font, fill=("#000000"))
+    праздники.save(r"Z:\1-мд-21\Воронков Никита\3\Image\ng11.jpg")
+    праздники.show()
 
 
-# 4
-
-
-def z4():
-    x = input("Введите 1 цвет: ")
-    y = input("Введите 2 цвет: ")
-    if (x == 'красный' and y == 'синий') or  (y == "красный" and x == 'синий'):
-        print('Фиолетовый')
-    elif (x == "красный" and y == 'желтый') or  (y == "красный" and x == 'желтый'):
-        print('Оранжевый')
-    elif (x == "синий" and y == 'желтый') or  (y == "синий" and x == 'желтый'):
-        print('Зелёный')
-    else:
-        print('ошибка')
-z4()
-
+z3()
