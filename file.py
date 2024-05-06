@@ -1,52 +1,75 @@
 def z1():
+    from pathlib import Path
     from PIL import Image
 
-    image = Image.open(r"Z:\1-мд-21\Воронков Никита\3\Image\priroda.jpg")
+    input_dir = Path(r'Z:\1-мд-21\Воронков Никита\Image9\input_images')
+    output_dir = Path(r'Z:\1-мд-21\Воронков Никита\Image9\output_images')
 
-    left = 0
-    top = 300
-    right = image.width
-    bottom = image.height
+    output_dir.mkdir(parents=True, exist_ok=True)
 
-    cropped_image = image.crop((left, top, right, bottom))
+    for file in input_dir.iterdir():
+        if file.suffix in ['.jpg', '.png', '.bmp']:
+            input_path = file
+            output_path = output_dir / file.name
 
-    cropped_image.save(r"Z:\1-мд-21\Воронков Никита\3\Image\priroda1.jpg")
+            image = Image.open(input_path)
+            image = image.convert('L')
+            image.save(output_path)
 
+    print("Все изображения успешно обработаны!")
 
 
 def z2():
+    import os
     from PIL import Image
-    праздники = {
-        "Новый год": r"Z:\1-мд-21\Воронков Никита\3\Image\ng.jpg",
-        "Рождество": r"Z:\1-мд-21\Воронков Никита\3\Image\ros.jpg",
-        "8 Марта": r"Z:\1-мд-21\Воронков Никита\3\Image\8marta.jpg"
-    }
 
+    input_dir = (r'Z:\1-мд-21\Воронков Никита\Image9\input_images')
+    input_files = os.listdir(input_dir)
 
-    праздник = input("Введите название праздника: ")
-    for key in праздники:
-        if key == праздник:
-            print("Открытка загружается")
-            y = Image.open(праздники[key])
-            y.show()
+    output_dir = (r'Z:\1-мд-21\Воронков Никита\Image9\output_images')
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
 
+    for file in input_files:
+        extension = os.path.splitext(file)[1]
 
+        if extension.lower() in ['.jpg', '.png']:
+            input_path = os.path.join(input_dir, file)
+            output_path = os.path.join(output_dir, file)
+
+            image = Image.open(input_path)
+
+            image = image.convert('L')
+
+            image.save(output_path)
+
+    print("Все изображения JPG и PNG успешно обработаны!")
 
 
 def z3():
-    from PIL import Image, ImageDraw, ImageFont
+    import csv
 
-    праздники = Image.open(r"Z:\1-мд-21\Воронков Никита\3\Image\ng.jpg")
-    Imgdraw = ImageDraw.Draw(праздники)
-    x = input("Введите имя: ")
-    txt = str(x) + ', поздравляю! '
-    font = ImageFont.truetype("Roboto-Black.ttf", size=70)
-    y = Imgdraw.textlength(txt, font=font)
-    z = праздники.size
-    w = (z[0] // 3) - (y // 3)
-    Imgdraw.text((w, 20), txt, font=font, fill=("#000000"))
-    праздники.save(r"Z:\1-мд-21\Воронков Никита\3\Image\ng11.jpg")
-    праздники.show()
+    with open('file.csv', 'r', encoding='utf-8') as laba9:
+        csv_reader = csv.reader(laba9, delimiter=',')
+
+        total_cost = 0
+        shopping_list = []
+        for row in csv_reader:
+            product = row[0]
+            quantity = row[1]
+            price = row[2]
+
+            purchase_cost = float(quantity) * float(price)
+
+            shopping_list.append(f"{product} - {quantity} шт. за {purchase_cost} руб.")
+
+            total_cost += purchase_cost
+
+    print("Нужно купить:")
+    for item in shopping_list:
+        print(item)
+
+    print(f"Итоговая сумма: {total_cost} руб.")
 
 
 z3()
